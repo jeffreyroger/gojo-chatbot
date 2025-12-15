@@ -46,13 +46,18 @@ async def simulate_typing_delay(text: str):
 import re
 import unicodedata
 def enforce_spacing(text: str) -> str:
+    # Normalize text
     text = unicodedata.normalize("NFKC", text)
-    text = re.sub(r"([,.!?])(?=\S)", r"\1 ", text)
-    # split lowercase-uppercase merges
-    text = re.sub(r"([a-z])([A-Z])", r"\1 \2", text)
-    # split letter-digit merges
-    text = re.sub(r"([a-zA-Z])(\d)", r"\1 \2", text)
-    text = re.sub(r"(\d)([a-zA-Z])", r"\1 \2", text)
-    # collapse multiple spaces
-    text = re.sub(r"\s+", " ", text)
+
+    # Remove spaces before punctuation
+    text = re.sub(r'\s+([?.!,])', r'\1', text)
+
+    # Fix spaces around apostrophes and contractions
+    text = re.sub(r"\s*'\s*", "'", text)
+
+    # Collapse multiple spaces into one
+    text = re.sub(r'\s{2,}', ' ', text)
+
+    # Strip leading/trailing spaces
     return text.strip()
+

@@ -35,31 +35,27 @@ class ChatResponse(BaseModel):
 # -------------------- ENDPOINTS --------------------
 @app.get("/")
 async def health_check():
-    return {"status": "ok"}
+    return {"status": "ok"}  # original behavior
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(payload: ChatRequest):
-    try:
-        session_id = payload.session_id
-        user_message = payload.message.strip()
+    session_id = payload.session_id
+    user_message = payload.message.strip()
 
-        # Fetch conversation history
-        history = get_history(session_id)
+    # Fetch conversation history
+    history = get_history(session_id)
 
-        # Generate Gojo reply using history
-        llm_reply = await generate_response(
-            user_message=user_message,
-            conversation_history=history
-        )
+    # Generate Gojo reply using history
+    llm_reply = await generate_response(
+        user_message=user_message,
+        conversation_history=history
+    )
 
-        # Store conversation
-        add_message(session_id, "user", user_message)
-        add_message(session_id, "gojo", llm_reply)
+    # Store conversation
+    add_message(session_id, "user", user_message)
+    add_message(session_id, "gojo", llm_reply)
 
-        # Optional human-like delay
-        await simulate_typing_delay(llm_reply)
+    # Optional human-like delay
+    await simulate_typing_delay(llm_reply)
 
-        return ChatResponse(reply=llm_reply)
-
-    except Exception as e:
-        return ChatResponse(reply=f"…tch. Something broke. ({str(e)})")
+    return ChatResponse(reply=llm_reply)

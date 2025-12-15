@@ -1,0 +1,14 @@
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Node (if any)
+node_modules/
