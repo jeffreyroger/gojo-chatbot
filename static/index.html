@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gojo Chat</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="chat-container">
+
+  <!-- Typing indicator -->
+  <div id="typing" class="typing-indicator">
+  <span></span><span></span><span></span>
+</div>
+
+
+  <!-- Chat messages -->
+  <div id="chat" class="chat-box"></div>
+
+  <!-- Input bar -->
+  <div class="input-bar">
+    <input id="messageInput" type="text" placeholder="Say something…" />
+    <button id="sendBtn">Send</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
